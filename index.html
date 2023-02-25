@@ -62,7 +62,7 @@
         <!-- Other form elements -->
         <div
           class="g-recaptcha"
-          data-sitekey="6Lclb6gkAAAAADj-7OB3_SYnCu61pMJgXNaJVJ9N"
+          data-sitekey="6LcY27AkAAAAAJx5A3S26j6Kk6BZKaGifIT3vSFs"
         ></div>
         <button type="submit">Submit</button>
       </form>
@@ -122,7 +122,7 @@
             .status(400)
             .json({ message: "reCAPTCHA response missing" });
         }
-        const secretKey = "6Lclb6gkAAAAAAzxQg-YgXiuXxaZvYbLYDOZwWHg";
+        const secretKey = "6LcY27AkAAAAABLCCOzCN3kUya7eLDtxSlITLvk_";
         const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
         request.post(url, (error, response, body) => {
           if (error) {
