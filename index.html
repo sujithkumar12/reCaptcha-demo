@@ -23,25 +23,15 @@
         <textarea id="message" rows="4" placeholder="Message"></textarea>
         <button type="submit">Send Message</button>
       </form> -->
-      <form id="form" onsubmit="return submitForm(this);">
-        <input
-          type="text"
-          id="name"
-          placeholder="Your Name"
-          required
-        />
+      <form id="myForm">
+        <input type="text" id="name" placeholder="Your Name" required />
         <input
           type="number"
           id="contact"
           placeholder="Your phone number"
           required
         />
-        <input
-          type="email"
-          id="email"
-          placeholder="Your Email"
-          required
-        />
+        <input type="email" id="email" placeholder="Your Email" required />
         <textarea
           id="msg"
           cols="30"
@@ -66,18 +56,60 @@
 
     <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
     <script>
-      function submitForm(form) {
-        var response = grecaptcha.getResponse();
-        if (response.length == 0) {
-          // reCaptcha checkbox was not checked
-          alert("Please complete the reCaptcha challenge");
+      // Get a reference to the form element
+      var form = document.getElementById("myForm");
+
+      // Attach an event listener to the form's submit event
+      form.addEventListener("submit", function (event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Get a reference to the reCAPTCHA widget's response value
+        var recaptchaResponse = grecaptcha.getResponse();
+
+        // Check if the user completed the reCAPTCHA challenge
+        if (recaptchaResponse.length === 0) {
+          alert("Please complete the reCAPTCHA challenge.");
           return false;
-        } else {
-          // reCaptcha checkbox was checked, submit the form
-          form.preventDefault();
-          console.log("success");
         }
-      }
+
+        console.log("success");
+
+        // Send the form data and reCAPTCHA response to a server with AJAX
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("POST", "https://example.com/submit-form.php");
+        // xhr.setRequestHeader(
+        //   "Content-Type",
+        //   "application/x-www-form-urlencoded"
+        // );
+        // xhr.onload = function () {
+        //   if (xhr.status === 200) {
+        //     alert("Form submitted successfully.");
+        //     // Optionally, redirect the user to a different page after the form is submitted
+        //     window.location.href = "https://example.com/thank-you.html";
+        //   } else {
+        //     alert("Form submission failed.");
+        //   }
+        // };
+        // xhr.send(
+        //   "formData=" +
+        //     JSON.stringify(new FormData(form)) +
+        //     "&recaptchaResponse=" +
+        //     recaptchaResponse
+        // );
+      });
+      // function submitForm(form) {
+      //   var response = grecaptcha.getResponse();
+      //   if (response.length == 0) {
+      //     // reCaptcha checkbox was not checked
+      //     alert("Please complete the reCaptcha challenge");
+      //     return false;
+      //   } else {
+      //     // reCaptcha checkbox was checked, submit the form
+      //     form.preventDefault();
+      //     console.log("success");
+      //   }
+      // }
 
       // function sendEmail(event) {
       //   event.preventDefault();
