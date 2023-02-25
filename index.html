@@ -78,6 +78,7 @@
           return false;
         } else {
           // reCaptcha checkbox was checked, submit the form
+          form.preventDefault();
           console.log("success");
         }
       }
