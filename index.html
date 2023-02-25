@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <form onsubmit="sendEmail(); reset(); return false">
+        <h3>Get In Touch</h3>
+        <input type="text" id="name" placeholder="Your Name *" required />
+        <input type="email" id="email" placeholder="Your Email *" required />
+        <input
+          type="number"
+          id="phone"
+          placeholder="Your Phone Number *"
+          required
+        />
+        <textarea id="message" rows="4" placeholder="Message"></textarea>
+        <button type="submit">Send Message</button>
+      </form> -->
+      <form id="form" onsubmit="sendEmail(event)">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Your Name"
+          required
+        />
+        <input
+          type="number"
+          name="contact"
+          id="contact"
+          placeholder="Your phone number"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Your Email"
+          required
+        />
+        <textarea
+          name="msg"
+          id="msg"
+          cols="30"
+          rows="10"
+          placeholder="Your Message"
+          required
+        ></textarea>
+        <button type="submit">Send</button>
+      </form>
+
+      <!-- <button onclick="sendEmail()">send</button> -->
+
+      <form>
+        <!-- Other form elements -->
+        <div
+          class="g-recaptcha"
+          data-sitekey="6Lclb6gkAAAAADj-7OB3_SYnCu61pMJgXNaJVJ9N"
+        ></div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script>
+      function sendEmail(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const phone = document.getElementById("contact").value;
+        const message = document.getElementById("msg").value;
+
+        const emailBody = `<div>
+                            <div style="justify-content: center; display: flex;">
+                              <div style="border: 1px solid #a7a5a5; padding: 50px; border-radius: 10px;">
+                                <h3 style="color: #007aff; font-size: 25px; text-align: center;margin: 10px 0">Customers Feedback</h3>
+                                <p style="margin: 5px 0"><b>Name : </b>${name}</p>
+                                <p style="margin: 5px 0"><b>Phone Number : </b>${phone}</p>
+                                <p style="margin: 5px 0"><b>Message : </b>${message}</p>
+                              </div>
+                            </div>
+                          </div>`;
+
+        Email.send({
+          Host: "smtp.gmail.com",
+          Username: "demoapp24478@gmail.com",
+          Password: "xwhqfpcnecfeplsh",
+          To: "demoapp24478@gmail.com",
+          From: document.getElementById("email").value,
+          Subject: "This is the subject",
+          Body: emailBody,
+        })
+          .then((message) => alert(message));
+
+        // console.log(
+        //   "Name : " +
+        //     document.getElementById("name").value +
+        //     "\n" +
+        //     "Phone Number : " +
+        //     document.getElementById("contact").value +
+        //     "\n" +
+        //     "Message : " +
+        //     document.getElementById("msg").value
+        // );
+      }
+    </script>
+    <script>
+      const request = require("request");
+
+      // Verify the reCAPTCHA response
+      function verifyRecaptcha(req, res, next) {
+        const { captcha } = req.body;
+        if (!captcha) {
+          return res
+            .status(400)
+            .json({ message: "reCAPTCHA response missing" });
+        }
+        const secretKey = "6Lclb6gkAAAAAAzxQg-YgXiuXxaZvYbLYDOZwWHg";
+        const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
+        request.post(url, (error, response, body) => {
+          if (error) {
+            return res
+              .status(500)
+              .json({ message: "Error verifying reCAPTCHA response" });
+          }
+          const result = JSON.parse(body);
+          if (result.success) {
+            // reCAPTCHA response is valid
+            next();
+          } else {
+            // reCAPTCHA response is invalid
+            return res
+              .status(400)
+              .json({ message: "Invalid reCAPTCHA response" });
+          }
+        });
+      }
+    </script>
+    <!-- <script>
+      function sendEmail() {
+        Email.send({
+          //   Host: "smtp.elasticemail.com",
+          SecureToken: "4b2f676c-5ee9-486a-9486-c9141ab24b4b",
+          //   Username: "sujith@accelerlabsolutions.com",
+          //   Password: "SujithKAcceSolPvtMdb#626",
+          To: "sujith@accelerlabsolutions.com",
+          From: document.getElementById("email").value,
+          Subject: "This is the subject",
+          Body: "And this is the body",
+        }).then((message) => alert(message));
+      }
+    </script> -->
+
+    <!-- <script>
+      function sendEmail() {
+        Email.send({
+          Host : "smtp.elasticemail.com",
+          // SecureToken: "4b2f676c-5ee9-486a-9486-c9141ab24b4b",
+          To: "sujith@accelerlabsolutions.com",
+          From: "akshay@accelerlabsolutions.com",
+          Username: "sujith@accelerlabsolutions.com",
+          Password: "21037FFAA8C036F474F6FDD6FE38CCE76090",
+          Subject: "Email subject",
+          Body: "Email body",
+        }).then((message) => alert(message));
+      }
+    </script> -->
+  </body>
+</html>

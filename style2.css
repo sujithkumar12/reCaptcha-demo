@@ -1,0 +1,57 @@
+.cards-container {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth; /* for smooth scrolling */
+  -webkit-overflow-scrolling: touch; /* for touch scrolling on iOS */
+}
+
+.card {
+  width: 600px;
+  height: 200px;
+  background-color: #ccc;
+  margin: 10px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+/* .header-contact {
+  float: right;
+} */
+
+.header-contact .widget-text {
+  position: relative;
+  padding-left: 55px;
+}
+.header-contact .widget-text i {
+  position: absolute;
+  border-radius: 2px;
+  text-align: center;
+  left: 0;
+  line-height: 40px;
+  color: #003e78;
+  font-size: 35px;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  font-weight: 700;
+}
+.header-contact .widget-text .info-text a {
+  color: #505050;
+  font-weight: 400;
+  font-size: 16px;
+}
+a {
+  color: #D6F8D6;
+  transition: all 0.3s ease 0s;
+  text-decoration: none !important;
+  outline: none !important;
+}
+.header-contact .widget-text .info-text span {
+  display: block;
+  font-weight: 700;
+  color: #101010;
+  line-height: 18px;
+}

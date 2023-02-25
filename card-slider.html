@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style2.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="cards-container">
+      <div class="card">card 1</div>
+      <div class="card">card 2</div>
+      <div class="card">card 3</div>
+      <div class="card">card 4</div>
+      <!-- add more cards here -->
+    </div>
+
+    <div class="header-contact">
+      <div id="phone-details" class="widget-text">
+        <i class="fa-brands fa-whatsapp"></i>
+        <div class="info-text">
+          <a href="https://wa.me/923339119145">
+            <span>WhatsApp</span> +92 333-9119145
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://kit.fontawesome.com/b01eea4ed4.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const cardsContainer = document.querySelector(".cards-container");
+      const cards = document.querySelectorAll(".card");
+      let cardIndex = 0;
+
+      function scrollToNextCard() {
+        if (cardIndex >= cards.length) {
+          cardIndex = 0;
+        }
+
+        const nextCard = cards[cardIndex];
+        cardsContainer.scrollTo({
+          left: nextCard.offsetLeft - cardsContainer.offsetLeft,
+          behavior: "smooth",
+        });
+
+        cardIndex++;
+      }
+
+      setInterval(scrollToNextCard, 1000); // scroll every 5 seconds
+    </script>
+  </body>
+</html>
