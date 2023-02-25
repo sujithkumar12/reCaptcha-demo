@@ -23,7 +23,7 @@
         <textarea id="message" rows="4" placeholder="Message"></textarea>
         <button type="submit">Send Message</button>
       </form> -->
-      <form id="form" onsubmit="sendEmail(event)">
+      <form id="form" onsubmit="return submitForm(this);">
         <input
           type="text"
           name="name"
@@ -68,80 +68,92 @@
       </form> -->
     </div>
 
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
     <script>
-      function sendEmail(event) {
-        event.preventDefault();
-
-        const name = document.getElementById("name").value;
-        const phone = document.getElementById("contact").value;
-        const message = document.getElementById("msg").value;
-
-        const emailBody = `<div>
-                            <div style="justify-content: center; display: flex;">
-                              <div style="border: 1px solid #a7a5a5; padding: 50px; border-radius: 10px;">
-                                <h3 style="color: #007aff; font-size: 25px; text-align: center;margin: 10px 0">Customers Feedback</h3>
-                                <p style="margin: 5px 0"><b>Name : </b>${name}</p>
-                                <p style="margin: 5px 0"><b>Phone Number : </b>${phone}</p>
-                                <p style="margin: 5px 0"><b>Message : </b>${message}</p>
-                              </div>
-                            </div>
-                          </div>`;
-
-        Email.send({
-          Host: "smtp.gmail.com",
-          Username: "demoapp24478@gmail.com",
-          Password: "xwhqfpcnecfeplsh",
-          To: "demoapp24478@gmail.com",
-          From: document.getElementById("email").value,
-          Subject: "This is the subject",
-          Body: emailBody,
-        })
-          .then((message) => alert(message));
-
-        // console.log(
-        //   "Name : " +
-        //     document.getElementById("name").value +
-        //     "\n" +
-        //     "Phone Number : " +
-        //     document.getElementById("contact").value +
-        //     "\n" +
-        //     "Message : " +
-        //     document.getElementById("msg").value
-        // );
+      function submitForm(form) {
+        var response = grecaptcha.getResponse();
+        if (response.length == 0) {
+          // reCaptcha checkbox was not checked
+          alert("Please complete the reCaptcha challenge");
+          return false;
+        } else {
+          // reCaptcha checkbox was checked, submit the form
+          console.log("success");
+        }
       }
+
+      // function sendEmail(event) {
+      //   event.preventDefault();
+
+      //   const name = document.getElementById("name").value;
+      //   const phone = document.getElementById("contact").value;
+      //   const message = document.getElementById("msg").value;
+
+      //   const emailBody = `<div>
+      //                       <div style="justify-content: center; display: flex;">
+      //                         <div style="border: 1px solid #a7a5a5; padding: 50px; border-radius: 10px;">
+      //                           <h3 style="color: #007aff; font-size: 25px; text-align: center;margin: 10px 0">Customers Feedback</h3>
+      //                           <p style="margin: 5px 0"><b>Name : </b>${name}</p>
+      //                           <p style="margin: 5px 0"><b>Phone Number : </b>${phone}</p>
+      //                           <p style="margin: 5px 0"><b>Message : </b>${message}</p>
+      //                         </div>
+      //                       </div>
+      //                     </div>`;
+
+      // Email.send({
+      //   Host: "smtp.gmail.com",
+      //   Username: "demoapp24478@gmail.com",
+      //   Password: "xwhqfpcnecfeplsh",
+      //   To: "demoapp24478@gmail.com",
+      //   From: document.getElementById("email").value,
+      //   Subject: "This is the subject",
+      //   Body: emailBody,
+      // })
+      //   .then((message) => alert(message));
+
+      // console.log(
+      //   "Name : " +
+      //     document.getElementById("name").value +
+      //     "\n" +
+      //     "Phone Number : " +
+      //     document.getElementById("contact").value +
+      //     "\n" +
+      //     "Message : " +
+      //     document.getElementById("msg").value
+      // );
+      // }
     </script>
     <script>
-      const request = require("request");
+      // const request = require("request");
 
       // Verify the reCAPTCHA response
-      function verifyRecaptcha(req, res, next) {
-        const { captcha } = req.body;
-        if (!captcha) {
-          return res
-            .status(400)
-            .json({ message: "reCAPTCHA response missing" });
-        }
-        const secretKey = "6LcY27AkAAAAABLCCOzCN3kUya7eLDtxSlITLvk_";
-        const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
-        request.post(url, (error, response, body) => {
-          if (error) {
-            return res
-              .status(500)
-              .json({ message: "Error verifying reCAPTCHA response" });
-          }
-          const result = JSON.parse(body);
-          if (result.success) {
-            // reCAPTCHA response is valid
-            next();
-          } else {
-            // reCAPTCHA response is invalid
-            return res
-              .status(400)
-              .json({ message: "Invalid reCAPTCHA response" });
-          }
-        });
-      }
+      // function verifyRecaptcha(req, res, next) {
+      //   const { captcha } = req.body;
+      //   if (!captcha) {
+      //     return res
+      //       .status(400)
+      //       .json({ message: "reCAPTCHA response missing" });
+      //   }
+      //   const secretKey = "6LcY27AkAAAAABLCCOzCN3kUya7eLDtxSlITLvk_";
+      //   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
+      //   request.post(url, (error, response, body) => {
+      //     if (error) {
+      //       return res
+      //         .status(500)
+      //         .json({ message: "Error verifying reCAPTCHA response" });
+      //     }
+      //     const result = JSON.parse(body);
+      //     if (result.success) {
+      //       // reCAPTCHA response is valid
+      //       next();
+      //     } else {
+      //       // reCAPTCHA response is invalid
+      //       return res
+      //         .status(400)
+      //         .json({ message: "Invalid reCAPTCHA response" });
+      //     }
+      //   });
+      // }
     </script>
     <!-- <script>
       function sendEmail() {

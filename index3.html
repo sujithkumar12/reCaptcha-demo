@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact form with reCaptcha</title>
+    <link rel="stylesheet" href="style3.css" />
+    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <script>
+      (function () {
+        emailjs.init("Pk1GKHENXJohJlvAU");
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <form onsubmit="sendEmail(); reset(); return false;">
+        <h3>Get in Touch</h3>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Your Name"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Your Email"
+          required
+        />
+        <input
+          type="number"
+          name="phone"
+          id="phone"
+          placeholder="Your Phone"
+          required
+        />
+        <textarea
+          id="message"
+          rows="4"
+          placeholder="How can we help you?"
+        ></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
+    <script>
+      function sendEmail() {
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var message = document.getElementById("message").value;
+
+        var templateParams = {
+          from_name: name,
+          to_name: "Purvi dry fruits",
+          message: message,
+          reply_to: email,
+        };
+
+        emailjs
+          .send("service_jpvfkoi", "template_d6ol9vv", templateParams)
+          .then(
+            function (response) {
+              console.log("SUCCESS!", response.status, response.text);
+              alert("Your message has been sent.");
+            },
+            function (error) {
+              console.log("FAILED...", error);
+              alert(
+                "There was an error sending your message. Please try again later."
+              );
+            }
+          );
+        // Email.send({
+        //   Host: "smtp.gmail.com",
+        //   Username: "demoapp24478@gmail.com",
+        //   Password: "zerhocnaeozuacll",
+        //   To: "demoapp24478@gmail.com",
+        //   From: document.getElementById("email").value,
+        //   Subject: "This is the subject",
+        //   Body: "And this is the body",
+        // }).then((message) => alert(message));
+      }
+    </script>
+  </body>
+</html>
